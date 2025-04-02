@@ -30,4 +30,18 @@ describe('TaskManager', () => {
     await fireEvent.click(checkbox);
     expect(checkbox).toBeChecked();
   });
+
+  it('deletes a task', async () => {
+    const { getByLabelText, getByRole, getByText, queryByText } = render(TaskManager);
+    const input = getByLabelText('New task');
+    const addButton = getByRole('button', { name: 'Add' });
+
+    await fireEvent.input(input, { target: { value: 'Test task' } });
+    await fireEvent.click(addButton);
+
+    const deleteButton = getByRole('button', { name: 'Delete' });
+    await fireEvent.click(deleteButton);
+
+    expect(queryByText('Test task')).not.toBeInTheDocument();
+  });
 });
