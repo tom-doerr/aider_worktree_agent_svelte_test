@@ -69,4 +69,34 @@ describe('TaskManager', () => {
     expect(getByText('Task 1')).toBeInTheDocument();
     expect(getByText('Task 2')).toBeInTheDocument();
   });
+
+  it('adds task on Enter key', async () => {
+    const { getByLabelText, getByText } = render(TaskManager);
+    const input = getByLabelText('New task');
+
+    await fireEvent.input(input, { target: { value: 'Enter task' } });
+    await fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(getByText('Enter task')).toBeInTheDocument();
+  });
+
+  it('shows completed task styling', async () => {
+    const { getByLabelText, getByRole, getByText } = render(TaskManager);
+    const input = getByLabelText('New task');
+    const button = getByRole('button', { name: 'Add' });
+
+    await fireEvent.input(input, { target: { value: 'Styled task' } });
+    await fireEvent.click(button);
+
+    const checkbox = getByRole('checkbox');
+    await fireEvent.click(checkbox);
+    
+    const taskText = getByText('Styled task');
+    expect(taskText).toHaveClass('completed');
+  });
+
+  it('shows input placeholder', () => {
+    const { getByPlaceholderText } = render(TaskManager);
+    expect(getByPlaceholderText('Enter new task')).toBeInTheDocument();
+  });
 });
