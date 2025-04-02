@@ -2,6 +2,7 @@
 ignore-patterns=(
     ^.*\.js$,
     ^.*\.svelte$,
+    ^.*\.test\.js$,
     ^.*\.json$,
     ^.*\.md$,
     ^.*\.txt$,
