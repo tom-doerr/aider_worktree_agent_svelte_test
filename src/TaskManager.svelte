@@ -24,6 +24,7 @@
 
 <div class="task-manager">
   <h1>Task Manager</h1>
+  <p id="task-instructions" class="sr-only">Add tasks using the input field and button</p>
   
   <div class="add-task">
     <input
@@ -31,6 +32,7 @@
       bind:value={newTask}
       on:keydown={e => e.key === 'Enter' && addTask()}
       placeholder="Enter new task"
+      aria-describedby="task-instructions"
     />
     <button on:click={addTask}>Add</button>
   </div>
@@ -60,6 +62,17 @@
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
   input {
     flex-grow: 1;

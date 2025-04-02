@@ -44,4 +44,29 @@ describe('TaskManager', () => {
 
     expect(queryByText('Test task')).not.toBeInTheDocument();
   });
+
+  it('does not add empty tasks', async () => {
+    const { getByLabelText, getByRole, queryByText } = render(TaskManager);
+    const input = getByLabelText('New task');
+    const button = getByRole('button', { name: 'Add' });
+
+    await fireEvent.input(input, { target: { value: '   ' } });
+    await fireEvent.click(button);
+
+    expect(queryByText('No tasks yet')).toBeInTheDocument();
+  });
+
+  it('persists tasks after adding', async () => {
+    const { getByLabelText, getByRole, getByText } = render(TaskManager);
+    const input = getByLabelText('New task');
+    const button = getByRole('button', { name: 'Add' });
+
+    await fireEvent.input(input, { target: { value: 'Task 1' } });
+    await fireEvent.click(button);
+    await fireEvent.input(input, { target: { value: 'Task 2' } });
+    await fireEvent.click(button);
+
+    expect(getByText('Task 1')).toBeInTheDocument();
+    expect(getByText('Task 2')).toBeInTheDocument();
+  });
 });
