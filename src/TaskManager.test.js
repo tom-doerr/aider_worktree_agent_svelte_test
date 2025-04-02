@@ -8,6 +8,25 @@ describe('TaskManager', () => {
     expect(getByText('No tasks yet')).toHaveAttribute('aria-live', 'polite');
   });
 
+  it('loads tasks from localStorage', () => {
+    localStorage.setItem('tasks', JSON.stringify([{id: 1, text: 'Loaded task', completed: false}]));
+    const { getByText } = render(TaskManager);
+    expect(getByText('Loaded task')).toBeInTheDocument();
+  });
+
+  it('shows task count', async () => {
+    const { getByLabelText, getByRole, getByText } = render(TaskManager);
+    const input = getByLabelText('New task');
+    const button = getByRole('button', { name: 'Add' });
+
+    await fireEvent.input(input, { target: { value: 'Task 1' } });
+    await fireEvent.click(button);
+    await fireEvent.input(input, { target: { value: 'Task 2' } });
+    await fireEvent.click(button);
+
+    expect(getByText('2 tasks')).toBeInTheDocument();
+  });
+
   it('persists tasks to localStorage', async () => {
     const { getByLabelText, getByRole } = render(TaskManager);
     const input = getByLabelText('New task');

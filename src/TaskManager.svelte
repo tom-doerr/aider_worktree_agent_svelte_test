@@ -57,9 +57,15 @@
     <button on:click={addTask}>Add</button>
   </div>
 
-  {#if tasks.length === 0}
-    <p aria-live="polite">No tasks yet</p>
-  {:else}
+  <p aria-live="polite">
+    {#if tasks.length === 0}
+      No tasks yet
+    {:else}
+      {tasks.length} {tasks.length === 1 ? 'task' : 'tasks'}
+    {/if}
+  </p>
+  
+  {#if tasks.length > 0}
     <ul>
       {#each tasks as task (task.id)}
         <Task 
