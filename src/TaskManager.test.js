@@ -5,6 +5,25 @@ describe('TaskManager', () => {
   it('renders an empty task list', () => {
     const { getByText } = render(TaskManager);
     expect(getByText('No tasks yet')).toBeInTheDocument();
+    expect(getByText('No tasks yet')).toHaveAttribute('aria-live', 'polite');
+  });
+
+  it('persists tasks to localStorage', async () => {
+    const { getByLabelText, getByRole } = render(TaskManager);
+    const input = getByLabelText('New task');
+    const button = getByRole('button', { name: 'Add' });
+
+    await fireEvent.input(input, { target: { value: 'Persisted task' } });
+    await fireEvent.click(button);
+
+    expect(JSON.parse(localStorage.getItem('tasks'))).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          text: 'Persisted task',
+          completed: false
+        })
+      ])
+    );
   });
 
   it('adds a new task', async () => {

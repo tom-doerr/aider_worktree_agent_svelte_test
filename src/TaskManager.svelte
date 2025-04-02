@@ -2,6 +2,26 @@
   import Task from './Task.svelte';
   
   let tasks = [];
+  
+  // Load tasks from localStorage on init
+  if (typeof localStorage !== 'undefined') {
+    try {
+      const savedTasks = localStorage.getItem('tasks');
+      tasks = savedTasks ? JSON.parse(savedTasks) : [];
+    } catch (e) {
+      console.error('Failed to load tasks', e);
+    }
+  }
+
+  $: {
+    if (typeof localStorage !== 'undefined') {
+      try {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+      } catch (e) {
+        console.error('Failed to save tasks', e);
+      }
+    }
+  }
   let newTask = '';
 
   function addTask() {
@@ -38,7 +58,7 @@
   </div>
 
   {#if tasks.length === 0}
-    <p>No tasks yet</p>
+    <p aria-live="polite">No tasks yet</p>
   {:else}
     <ul>
       {#each tasks as task (task.id)}
