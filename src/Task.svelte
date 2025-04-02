@@ -10,6 +10,7 @@
     checked={task.completed}
     on:change={onToggle}
     aria-label={`Mark ${task.text} as ${task.completed ? 'incomplete' : 'complete'}`}
+    aria-checked={task.completed}
   />
   <span class:completed={task.completed}>{task.text}</span>
   <button on:click={onDelete}>Delete</button>

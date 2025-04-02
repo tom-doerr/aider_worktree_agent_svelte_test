@@ -108,6 +108,21 @@ describe('TaskManager', () => {
     expect(getByText('Task 2')).toBeInTheDocument();
   });
 
+  it('handles localStorage errors gracefully', () => {
+    const mockSetItem = jest.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('Storage failed');
+    });
+    const { getByLabelText, getByRole } = render(TaskManager);
+    const input = getByLabelText('New task');
+    const button = getByRole('button', { name: 'Add' });
+
+    fireEvent.input(input, { target: { value: 'Error task' } });
+    fireEvent.click(button);
+
+    expect(mockSetItem).toHaveBeenCalled();
+    mockSetItem.mockRestore();
+  });
+
   it('adds task on Enter key', async () => {
     const { getByLabelText, getByText } = render(TaskManager);
     const input = getByLabelText('New task');

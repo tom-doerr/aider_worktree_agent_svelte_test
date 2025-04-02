@@ -19,6 +19,7 @@
         localStorage.setItem('tasks', JSON.stringify(tasks));
       } catch (e) {
         console.error('Failed to save tasks', e);
+        // Continue even if storage fails
       }
     }
   }

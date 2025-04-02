@@ -34,4 +34,10 @@ describe('Task', () => {
     await fireEvent.click(button);
     expect(mockDelete).toHaveBeenCalled();
   });
+
+  it('has proper aria attributes', () => {
+    const { getByRole } = render(Task, { props: { task } });
+    const checkbox = getByRole('checkbox');
+    expect(checkbox).toHaveAttribute('aria-label', 'Mark Test task as incomplete');
+  });
 });
