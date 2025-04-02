@@ -1,0 +1,16 @@
+[MASTER]
+ignore-patterns=^.*\.(js|svelte|test\.js|json|md|txt|yml|yaml|html|css|scss|less|ts|vue|sh|sql|xml|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot|mp3|mp4|avi|mov|pdf|zip|tar|gz|bz2|xz|7z|rar|exe|dll|so|dylib|a|o|obj|lib|msi|bat|cmd|ps1|psm1|psd1|ps1xml|psc1|pssc|cdxml|wsf|vbs|reg|inf|ini|cfg|conf|log|tmp|temp|bak|sw[poenmlkjihgf0-9]*)$
+
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
+disable=
+    C0303,  # Wrong hanging indentation
+    C0111,  # Missing docstring
+    C0103,  # Invalid name
+    C0301,  # Line too long
+    C0411,  # Wrong import order
+    C0412,  # Ungrouped imports
+    C0413,  # Wrong import position
+    W0311   # Bad indentation
